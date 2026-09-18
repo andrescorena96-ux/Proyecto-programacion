@@ -2,29 +2,36 @@
 <div class="row">
     <div class="col-md-8 offset-md-2">
         <div class="card shadow-sm p-4">
-            <h2 class="mb-4">Resultados: <%= poll.title %></h2>
+            <h2 class="mb-2">Resultados: <%= poll.title %></h2>
+            <p class="text-muted mb-4"><%= poll.description %></p>
             
-            <% 
-                let totalVotes = poll.options.reduce((sum, opt) => sum + opt.votes, 0);
-            %>
-            
-            <% poll.options.forEach(option => { 
-                let percentage = totalVotes > 0 ? ((option.votes / totalVotes) * 100).toFixed(1) : 0;
-            %>
-                <div class="mb-3">
-                    <div class="d-flex justify-content-between mb-1">
-                        <span><strong><%= option.text %></strong></span>
-                        <span><%= option.votes %> votos (<%= percentage %>%)</span>
-                    </div>
-                    <div class="progress" style="height: 25px;">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: <%= percentage %>%;" aria-valuenow="<%= percentage %>" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
+            <% poll.questions.forEach((q, qIndex) => { %>
+                <div class="mb-4 pb-3 border-bottom">
+                    <h5 class="text-secondary mb-3"><%= qIndex + 1 %>. <%= q.question_text %></h5>
+                    
+                    <% 
+                        let totalVotes = q.options.reduce((sum, opt) => sum + opt.votes, 0);
+                    %>
+                    
+                    <% q.options.forEach(option => { 
+                        let percentage = totalVotes > 0 ? ((option.votes / totalVotes) * 100).toFixed(1) : 0;
+                    %>
+                        <div class="mb-2">
+                            <div class="d-flex justify-content-between mb-1">
+                                <span><%= option.text %></span>
+                                <span><strong><%= option.votes %></strong> votos (<%= percentage %>%)</span>
+                            </div>
+                            <div class="progress" style="height: 20px;">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: <%= percentage %>%;" aria-valuenow="<%= percentage %>" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                    <% }) %>
                 </div>
             <% }) %>
             
             <div class="text-center mt-4">
                 <a href="/" class="btn btn-secondary">Volver al Inicio</a>
-                <a href="/poll/<%= poll.id %>" class="btn btn-primary ms-2">Votar otra vez</a>
+                <a href="/poll/<%= poll.id %>" class="btn btn-primary ms-2">Volver a Votar</a>
             </div>
         </div>
     </div>
