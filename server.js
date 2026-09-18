@@ -5,7 +5,7 @@ const qrcode = require('qrcode-terminal');
 const os = require('os');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -148,11 +148,11 @@ function getLocalIp() {
     return 'localhost';
 }
 
+// Inicio del servidor con generación del código QR en terminal
 app.listen(PORT, () => {
     const localUrl = `http://${getLocalIp()}:${PORT}`;
     console.log(`\nServidor corriendo en ${localUrl}`);
-    console.log('Escanea este código QR con tu celular (asegúrate de estar conectado al mismo Wi-Fi):\n');
+    console.log('Escanea este código QR con tu celular (asegúrate de estar en el mismo Wi-Fi):\n');
     
-    // Genera el código QR directamente en la terminal de PowerShell
     qrcode.generate(localUrl, { small: true });
 });
