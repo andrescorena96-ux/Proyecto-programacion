@@ -1,18 +1,25 @@
 <%- include('partials/head', { title: poll.title }) %>
 <div class="row">
-    <div class="col-md-6 offset-md-3">
+    <div class="col-md-8 offset-md-2">
         <div class="card shadow-sm p-4">
-            <h2 class="mb-3"><%= poll.title %></h2>
+            <h2 class="mb-2"><%= poll.title %></h2>
+            <p class="text-muted mb-4"><%= poll.description %></p>
+            
             <form action="/poll/<%= poll.id %>/vote" method="POST">
-                <% poll.options.forEach(option => { %>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="radio" name="option_id" id="opt_<%= option.id %>" value="<%= option.id %>" required>
-                        <label class="form-check-label fs-5" for="opt_<%= option.id %>">
-                            <%= option.text %>
-                        </label>
+                <% poll.questions.forEach((q, qIndex) => { %>
+                    <div class="card mb-4 p-3 bg-light border-0">
+                        <h5 class="mb-3 text-primary"><%= qIndex + 1 %>. <%= q.question_text %></h5>
+                        <% q.options.forEach(option => { %>
+                            <div class="form-check mb-2">
+                                <input class="form-check-input" type="radio" name="q_<%= q.id %>" id="opt_<%= option.id %>" value="<%= option.id %>" required>
+                                <label class="form-check-label" for="opt_<%= option.id %>">
+                                    <%= option.text %>
+                                </label>
+                            </div>
+                        <% }) %>
                     </div>
                 <% }) %>
-                <button type="submit" class="btn btn-success w-100 mt-3">Enviar Voto</button>
+                <button type="submit" class="btn btn-success w-100 py-2 fs-5">Enviar Todas Mis Respuestas</button>
             </form>
         </div>
     </div>
