@@ -1,0 +1,26 @@
+<%- include('partials/head', { title: 'Lista de Encuestas' }) %>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h2 class="mb-4">Encuestas Disponibles</h2>
+        <% if (polls && polls.length > 0) { %>
+            <div class="list-group shadow-sm">
+                <% polls.forEach(poll => { %>
+                    <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center py-3">
+                        <h5 class="mb-0"><%= poll.title %></h5>
+                        <div>
+                            <a href="/poll/<%= poll.id %>" class="btn btn-outline-primary btn-sm me-2">Votar</a>
+                            <a href="/poll/<%= poll.id %>/results" class="btn btn-outline-secondary btn-sm">Resultados</a>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <div class="alert alert-info text-center">No hay encuestas creadas todavía. ¡Sé el primero en crear una!</div>
+        <% } %>
+    </div>
+</div>
+<!-- Cierre del container y body -->
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
